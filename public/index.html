@@ -3,228 +3,83 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="ClassCore Tuition Management System" />
-    <title>ClassCore | Smart Tuition Management</title>
+    <meta name="description" content="ClassCore tuition management dashboard and desktop software." />
+    <title>ClassCore | Tuition Management</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body>
-    <div class="page-shell">
-      <header class="topbar">
-        <div class="container nav">
-          <div class="brand">
-            <img class="brand-logo" src="/assets/classcore-logo.png" alt="ClassCore logo" />
-            <span>ClassCore</span>
-          </div>
-
-          <nav class="nav-links">
-            <a href="#features">Features</a>
-            <a href="#modules">Modules</a>
-            <a href="/downloads.html">Downloads</a>
-            <a href="#contact">Contact</a>
-          </nav>
-
-          <a class="btn btn-primary" href="/downloads.html">Download</a>
+  <body class="dashboard-body">
+    <div class="dashboard-shell">
+      <aside class="dashboard-sidebar">
+        <a class="dashboard-brand" href="/" aria-label="ClassCore dashboard home">
+          <img src="/assets/classcore-logo.png" alt="ClassCore" />
+          <span>CLASSCORE<small>CLASSCORE</small></span>
+        </a>
+        <nav class="dashboard-nav" aria-label="Dashboard navigation">
+          <a class="active" href="#dashboard"><span>▥</span> Dashboard</a>
+          <a href="#modules"><span>⌁</span> Students</a>
+          <a href="#modules"><span>◷</span> Batches</a>
+          <a href="#modules"><span>▦</span> Courses</a>
+          <a href="#modules"><span>▤</span> Exams</a>
+          <a href="#modules"><span>◉</span> Fees</a>
+          <a href="#modules"><span>▧</span> Expenses</a>
+          <a href="#modules"><span>✓</span> Attendance</a>
+          <a href="#modules"><span>◈</span> Broadcast</a>
+          <a href="#contact"><span>⚙</span> Settings</a>
+        </nav>
+        <div class="dashboard-user">
+          <div class="user-avatar">KU</div>
+          <div><strong>ClassCore</strong><small>Administrator</small><a href="/downloads.html">Download app</a></div>
         </div>
-      </header>
+      </aside>
 
-      <main>
-        <section class="hero">
-          <div class="container hero-grid">
-            <div class="hero-copy">
-              <div class="eyebrow">Smart Institute & Tuition Software</div>
-              <h1>Run your classes with clarity, speed, and control.</h1>
-              <p>
-                ClassCore helps tuition centers, institutes, and coaching classes manage
-                admissions, fees, attendance, exams, reports, and communication from one place.
-              </p>
+      <main class="dashboard-main" id="dashboard">
+        <header class="dashboard-header">
+          <div><p class="dashboard-kicker">Tuition Management</p><h1>Dashboard</h1></div>
+          <div class="header-actions">
+            <span class="date-chip">Wed, 23 Sep, 2026</span>
+            <span class="sync-chip"><i></i> Cloud Synced</span>
+            <a class="qr-button" href="/downloads.html">▦ &nbsp; Download</a>
+          </div>
+        </header>
 
-              <div class="hero-actions">
-                <a class="btn btn-primary" href="/downloads.html">Download</a>
-                <a class="btn btn-secondary" href="#features">Explore Features</a>
-              </div>
+        <section class="metric-grid" aria-label="Key metrics">
+          <article class="metric-card blue"><span>ACTIVE STUDENTS</span><strong>13</strong><p><b>+1 this month</b> · 0 inactive</p><em>🎓</em></article>
+          <article class="metric-card green"><span>ATTENDANCE TODAY</span><strong>—</strong><p>No attendance taken yet today</p><em>▣</em></article>
+          <article class="metric-card orange"><span>SEPTEMBER FEE VELOCITY</span><strong>₹43,319</strong><p><b>95% collected</b> · <i>₹2,083 pending</i></p><em>▰</em></article>
+          <article class="metric-card teal"><span>SEPTEMBER NET MARGIN</span><strong>+₹30,819</strong><p><b>71% margin</b> · Outflow: ₹12,500</p><em>▱</em></article>
+        </section>
 
-              <ul class="stats">
-                <li><strong id="student-count">5000+</strong><span>Students</span></li>
-                <li><strong id="batch-count">120+</strong><span>Batches</span></li>
-                <li><strong id="report-count">24/7</strong><span>Operations</span></li>
-              </ul>
-            </div>
-
-            <div class="hero-visual">
-              <div class="floating-panel panel-main">
-                <div class="panel-head">
-                  <span class="dot green"></span>
-                  <span class="dot orange"></span>
-                  <span class="dot blue"></span>
-                </div>
-
-                <div class="dashboard-card">
-                  <div class="row row-top">
-                    <span>Monthly Collection</span>
-                    <strong>₹1,42,850</strong>
-                  </div>
-                  <div class="bars">
-                    <span style="height: 42%"></span>
-                    <span style="height: 58%"></span>
-                    <span style="height: 72%"></span>
-                    <span style="height: 68%"></span>
-                    <span style="height: 82%"></span>
-                    <span style="height: 94%"></span>
-                  </div>
-                </div>
-
-                <div class="mini-grid">
-                  <div class="mini-box success">
-                    <label>Fees Paid</label>
-                    <strong>96%</strong>
-                  </div>
-                  <div class="mini-box neutral">
-                    <label>Attendance</label>
-                    <strong>89%</strong>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <section class="launchpad" id="modules">
+          <div class="section-label">⚡ HIGH-VELOCITY OPERATIONS LAUNCHPAD</div>
+          <div class="action-grid">
+            <a href="/downloads.html"><span>🎓</span><strong>New Student</strong><small>Quick Admission</small></a>
+            <a href="/downloads.html"><span>ϟ</span><strong>Biometric &amp;<br />Punch Hub</strong><small>Live &amp; Pen Drive Logs</small></a>
+            <a href="#contact"><span>💵</span><strong>Collect Fees</strong><small>Quick Receipt</small></a>
+            <a href="#contact"><span>▦</span><strong>Weekly<br />Timetable</strong><small>Room &amp; Batch Matrix</small></a>
+            <a href="#contact"><span>◯</span><strong>WhatsApp<br />Hub</strong><small>Auto-Reply &amp; Desk</small></a>
+            <a href="#contact"><span>💸</span><strong>Log Expense</strong><small>Debit Voucher</small></a>
+            <a href="/downloads.html"><span>▤</span><strong>Paper<br />Generator</strong><small>AI &amp; Word (.doc)</small></a>
+            <a href="/downloads.html"><span>▣</span><strong>System Book</strong><small>Operating Manual</small></a>
           </div>
         </section>
 
-        <section id="features" class="feature-section">
-          <div class="container section-header">
-            <p class="eyebrow center">Core Features</p>
-            <h2>Everything your education business needs</h2>
-          </div>
-
-          <div class="container feature-grid">
-            <article class="feature-card">
-              <div class="icon">🎓</div>
-              <h3>Student Management</h3>
-              <p>Track admissions, batches, notes, parents, and student performance in one dashboard.</p>
-            </article>
-
-            <article class="feature-card">
-              <div class="icon">💰</div>
-              <h3>Fees & Expenses</h3>
-              <p>Collect fees, monitor dues, create payment records, and maintain clean financial reports.</p>
-            </article>
-
-            <article class="feature-card">
-              <div class="icon">📅</div>
-              <h3>Attendance</h3>
-              <p>Manage daily attendance across multiple batches and keep updates visible to staff instantly.</p>
-            </article>
-
-            <article class="feature-card">
-              <div class="icon">📝</div>
-              <h3>Exams & Results</h3>
-              <p>Prepare exams, mark results, generate reports, and track student progress over time.</p>
-            </article>
-
-            <article class="feature-card">
-              <div class="icon">📲</div>
-              <h3>WhatsApp Ready</h3>
-              <p>Send notices, updates, and communication faster with integrated messaging workflows.</p>
-            </article>
-
-            <article class="feature-card">
-              <div class="icon">📊</div>
-              <h3>Reports & Insights</h3>
-              <p>Understand payment trends, attendance patterns, and center performance using built-in reports.</p>
-            </article>
-          </div>
+        <section class="dashboard-panels">
+          <article class="schedule-panel">
+            <div class="panel-title"><div><h2>▦ Today's Schedule (Wednesday)</h2><p>3 batches scheduled for today</p></div><a href="#modules">Full Timetable →</a></div>
+            <div class="schedule-row"><b>⏰ 09:00 - 10:45</b><div><strong>Morning</strong><small>▣ Science</small></div><span>0 sts</span><button>▣ Attendance</button></div>
+            <div class="schedule-row"><b>⏰ 14:00 - 15:30</b><div><strong>2:00 PM TO 3:30 PM</strong><small>▣ ALL</small></div><span>0 sts</span><button>▣ Attendance</button></div>
+            <div class="schedule-row"><b>⏰ 5:30 To 7:30</b><div><strong>Evening</strong><small>▣ S.S</small></div><span>0 sts</span><button>▣ Attendance</button></div>
+          </article>
+          <article class="status-panel"><div class="status-tabs"><strong>⚠ Overdue Fees (0)</strong><span>🔴 Attendance Defaulters (0)</span></div><div class="empty-state"><b>🎉</b><strong>No critical overdue fees!</strong><p>All student dues are within the normal payment window</p></div></article>
         </section>
 
-        <section id="modules" class="module-section">
-          <div class="container section-header">
-            <p class="eyebrow center">Main Modules</p>
-            <h2>Built for modern tuition operations</h2>
-          </div>
-
-          <div class="container module-grid">
-            <div class="module-card">
-              <span>01</span>
-              <h3>Admissions</h3>
-            </div>
-            <div class="module-card">
-              <span>02</span>
-              <h3>Fees</h3>
-            </div>
-            <div class="module-card">
-              <span>03</span>
-              <h3>Attendance</h3>
-            </div>
-            <div class="module-card">
-              <span>04</span>
-              <h3>Exams</h3>
-            </div>
-            <div class="module-card">
-              <span>05</span>
-              <h3>Reports</h3>
-            </div>
-            <div class="module-card">
-              <span>06</span>
-              <h3>Settings</h3>
-            </div>
-          </div>
-        </section>
-
-        <section id="download" class="download-section">
-          <div class="container download-box">
-            <div>
-              <p class="eyebrow">Download</p>
-              <h2>Get the desktop version of ClassCore</h2>
-            </div>
-
-            <div class="download-actions">
-              <a class="btn btn-primary large" href="/downloads.html">
-                Open Downloads
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section id="contact" class="contact-section">
-          <div class="container contact-grid">
-            <div class="contact-copy">
-              <p class="eyebrow">Contact</p>
-              <h2>Need help or want a demo?</h2>
-              <p>Speak with the ClassCore team and get a setup discussion for your institute.</p>
-              <div class="contact-item">
-                <strong>Email</strong>
-                <a href="mailto:coreclass.2025@gmail.com">coreclass.2025@gmail.com</a>
-              </div>
-            </div>
-
-            <form id="contactForm" class="contact-form">
-              <div class="field-row">
-                <input type="text" name="name" placeholder="Your name" required />
-              </div>
-              <div class="field-row">
-                <input type="email" name="email" placeholder="Email address" required />
-              </div>
-              <div class="field-row">
-                <input type="text" name="phone" placeholder="Phone number" />
-              </div>
-              <div class="field-row">
-                <textarea name="message" rows="5" placeholder="Write your message" required></textarea>
-              </div>
-              <button class="btn btn-primary" type="submit">Send Message</button>
-              <p id="formStatus" class="form-status" aria-live="polite"></p>
-            </form>
-          </div>
-        </section>
+        <section class="dashboard-download"><div><span>ClassCore Desktop</span><h2>Run your complete institute from one place.</h2><p>The real ClassCore software includes students, fees, attendance, exams, reports, and communication.</p></div><a href="/downloads.html">Download ClassCore →</a></section>
+        <section class="dashboard-contact" id="contact"><div><span>Need help?</span><h2>Talk to the ClassCore team.</h2><p>coreclass.2025@gmail.com</p></div><a href="mailto:coreclass.2025@gmail.com">Contact support →</a></section>
       </main>
-
-      <footer class="site-footer">
-        <div class="container footer-inner">
-          <p>© <span id="year"></span> ClassCore</p>
-          <p>Tuition Management System</p>
-        </div>
-      </footer>
     </div>
-
     <script src="/js/app.js"></script>
   </body>
 </html>
