@@ -1,0 +1,6 @@
+node_modules/
+data/requests.json
+.env
+public/downloads/*.exe
+public/downloads/*.blockmap
+public/downloads/*.yml

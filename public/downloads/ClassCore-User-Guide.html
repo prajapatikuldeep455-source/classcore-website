@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClassCore — Master System &amp; Operations Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0D9488;
+      --primary-dark: #0F766E;
+      --primary-light: #F0FDFA;
+      --accent: #E8622A;
+      --navy: #0F172A;
+      --navy-light: #1E293B;
+      --text: #334155;
+      --text-muted: #64748B;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --border: #E2E8F0;
+      --sidebar-width: 320px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR NAVIGATION ────────────────────────── */
+    aside.sidebar {
+      width: var(--sidebar-width);
+      background: #FFFFFF;
+      border-right: 1.5px solid var(--border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 50;
+    }
+
+    .sb-header {
+      padding: 24px 20px;
+      border-bottom: 1.5px solid var(--border);
+      background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    }
+
+    .sb-brand {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sb-brand span { color: var(--accent); }
+    .sb-badge {
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 12px;
+      background: #E0F2FE;
+      color: #0369A1;
+      text-transform: uppercase;
+    }
+
+    .sb-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .sb-search-wrap {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sb-search-inp {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      font-size: 12.5px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .sb-search-inp:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+    }
+
+    .sb-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 14px;
+    }
+
+    .sb-nav-item {
+      display: block;
+      padding: 9px 12px;
+      margin-bottom: 4px;
+      border-radius: 8px;
+      color: var(--navy-light);
+      text-decoration: none;
+      font-size: 12.5px;
+      font-weight: 600;
+      transition: all 0.15s ease;
+      line-height: 1.4;
+    }
+
+    .sb-nav-item:hover {
+      background: #F1F5F9;
+      color: var(--primary-dark);
+      transform: translateX(3px);
+    }
+
+    .sb-nav-item.active {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border-left: 3px solid var(--primary);
+      font-weight: 700;
+    }
+
+    .sb-actions {
+      padding: 16px 20px;
+      border-top: 1.5px solid var(--border);
+      background: #FFFFFF;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-print {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      background: var(--navy);
+      color: #FFFFFF;
+      font-size: 12.5px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+
+    .btn-print:hover { background: #1E293B; }
+
+    /* ── MAIN CONTENT AREA ─────────────────────────── */
+    main.content {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      max-width: 960px;
+      padding: 48px 48px 100px;
+      background: #FFFFFF;
+      min-height: 100vh;
+      border-right: 1px solid var(--border);
+    }
+
+    /* ── COVER HEADER ──────────────────────────────── */
+    .book-cover {
+      padding: 40px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      color: #FFFFFF;
+      margin-bottom: 48px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15);
+    }
+
+    .book-cover::after {
+      content: 'CLASSCORE';
+      position: absolute;
+      right: -20px;
+      bottom: -25px;
+      font-size: 80px;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.03);
+      letter-spacing: 5px;
+      user-select: none;
+    }
+
+    .cover-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: rgba(13, 148, 136, 0.3);
+      color: #2DD4BF;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(45, 212, 191, 0.3);
+    }
+
+    .cover-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+
+    .cover-subtitle {
+      font-size: 16px;
+      color: #94A3B8;
+      max-width: 600px;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 24px;
+      font-size: 12.5px;
+      color: #CBD5E1;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .cover-meta b { color: #FFFFFF; }
+
+    /* ── CHAPTER STYLING ───────────────────────────── */
+    .chapter {
+      margin-bottom: 60px;
+      scroll-margin-top: 40px;
+    }
+
+    .chapter-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    h2.chapter-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 22px;
+    }
+
+    h3.section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 30px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    p {
+      margin-bottom: 16px;
+      color: #334155;
+      font-size: 14.5px;
+      line-height: 1.7;
+    }
+
+    /* ── CALLOUT BOXES ─────────────────────────────── */
+    .callout {
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    .callout-tip {
+      background: #F0FDF4;
+      border-left: 4px solid #22C55E;
+      color: #166534;
+    }
+
+    .callout-warning {
+      background: #FFFBEB;
+      border-left: 4px solid #F59E0B;
+      color: #92400E;
+    }
+
+    .callout-info {
+      background: #F0FDFA;
+      border-left: 4px solid var(--primary);
+      color: #115E59;
+    }
+
+    .callout-title {
+      font-weight: 800;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── DIAGRAM / FLOW BOXES ──────────────────────── */
+    .diagram-card {
+      background: #0F172A;
+      border-radius: 14px;
+      padding: 22px;
+      color: #F8FAFC;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      line-height: 1.6;
+      margin: 24px 0;
+      overflow-x: auto;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    .diagram-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #94A3B8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── TABLES ────────────────────────────────────── */
+    table.spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 13px;
+    }
+
+    table.spec-table th {
+      background: #F8FAFC;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--navy);
+      border-bottom: 2px solid var(--border);
+    }
+
+    table.spec-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    table.spec-table tr:hover { background: #FAFAFA; }
+
+    /* ── STEP-BY-STEP FLOW ─────────────────────────── */
+    .step-list {
+      margin: 18px 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .step-item {
+      position: relative;
+      padding-left: 36px;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    .step-num {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: #F1F5F9;
+      color: #0F172A;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid #E2E8F0;
+    }
+
+    /* ── PRINT-SPECIFIC CSS ────────────────────────── */
+    @media print {
+      body { background: #FFFFFF; color: #000000; }
+      aside.sidebar { display: none !important; }
+      main.content {
+        margin-left: 0 !important;
+        max-width: 100% !important;
+        padding: 20px !important;
+        border: none !important;
+      }
+      .book-cover {
+        box-shadow: none !important;
+        border: 1.5px solid #000000;
+        background: #F8FAFC !important;
+        color: #000000 !important;
+        page-break-after: always;
+      }
+      .cover-meta { color: #333333 !important; border-top-color: #CCCCCC !important; }
+      .cover-meta b { color: #000000 !important; }
+      .chapter { page-break-inside: avoid; }
+      h2.chapter-title { page-break-before: auto; }
+      .diagram-card {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        border: 1px solid #000000 !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SIDEBAR NAVIGATION
+       ═══════════════════════════════════════════════════════════════ -->
+  <aside class="sidebar">
+    <div class="sb-header">
+      <div class="sb-brand">
+        CLASS<span>CORE</span>
+        <span class="sb-badge">Book</span>
+      </div>
+      <div class="sb-sub">Master System &amp; Operations Manual</div>
+    </div>
+
+    <div class="sb-search-wrap">
+      <input type="text" id="manual-search" class="sb-search-inp" placeholder="🔍 Search book (e.g. biometric, fees)..." oninput="filterBook(this.value)">
+    </div>
+
+    <nav class="sb-nav" id="sb-nav-list">
+      <a href="#ch1" class="sb-nav-item active">1. System Architecture &amp; Overview</a>
+      <a href="#ch2" class="sb-nav-item">2. First-Time Setup &amp; Onboarding</a>
+      <a href="#ch3" class="sb-nav-item">3. Student &amp; Batch Management</a>
+      <a href="#ch4" class="sb-nav-item">4. Attendance Ecosystem &amp; Biometrics</a>
+      <a href="#ch5" class="sb-nav-item">5. Fees &amp; Financial Suite</a>
+      <a href="#ch6" class="sb-nav-item">6. Exams, Marks &amp; Report Cards</a>
+      <a href="#ch7" class="sb-nav-item">7. AI Question Paper Generator</a>
+      <a href="#ch8" class="sb-nav-item">8. WhatsApp Hub &amp; Auto-Alerts</a>
+      <a href="#ch9" class="sb-nav-item">9. Academic Rollover</a>
+      <a href="#ch10" class="sb-nav-item">10. Cloud Sync, Backup &amp; Recovery</a>
+      <a href="#ch11" class="sb-nav-item">11. Troubleshooting &amp; FAQs</a>
+    </nav>
+
+    <div class="sb-actions">
+      <button class="btn-print" onclick="window.print()">🖨️ Print Book / PDF</button>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MAIN BOOK CONTENT
+       ═══════════════════════════════════════════════════════════════ -->
+  <main class="content">
+
+    <!-- COVER SECTION -->
+    <div class="book-cover">
+      <div class="cover-tag">Official Operating Manual • ClassCore v3.4.0</div>
+      <h1 class="cover-title">ClassCore System &amp; Operations Book</h1>
+      <p class="cover-subtitle">
+        Coaching centers, tuition institutes aur schools ke sabhi operations ko 100% automate karne ke liye comprehensive, step-by-step master guide.
+      </p>
+      <div class="cover-meta">
+        <div>Author: <b>Kuldeep Prajapati</b></div>
+        <div>Release Version: <b>v3.4.0 Universal Biometric Edition</b></div>
+        <div>Architecture: <b>Offline-First + Cloud Companion</b></div>
+      </div>
+    </div>
+
+    <!-- CHAPTER 1 -->
+    <section id="ch1" class="chapter">
+      <div class="chapter-badge">Chapter 01</div>
+      <h2 class="chapter-title">System Architecture &amp; Overview (सिस्टम आर्किटेक्चर)</h2>
+      
+      <p>
+        <b>ClassCore</b> ek professional desktop software hai jise tuition institutes ke management ko simple, fast aur fully secure banane ke liye banaya gaya hai. Yeh application <b>Offline-First Architecture</b> par kaam karti hai — iska matlab hai ki aapka coaching center bina internet ke bhi 100% speed se chal sakta hai.
+      </p>
+
+      <div class="diagram-card">
+        <div class="diagram-title">System Architecture Topology</div>
+┌────────────────────────────────────────────────────────────────────────┐
+│                        CLASSCORE APPLICATION                           │
+├────────────────────────┬───────────────────────┬───────────────────────┤
+│    LOCAL DESKTOP       │     HARDWARE HUBS     │      CLOUD & COMMS    │
+│  (Electron Engine)     │  (Biometric/Scanners) │    (Firebase & WA)    │
+├────────────────────────┼───────────────────────┼───────────────────────┤
+│ • Offline Fast Storage │ • Realtime Machines   │ • WhatsApp Web Hub    │
+│ • Student Records      │ • eSSL / ZKTeco Logs  │ • Parent PDF Receipts │
+│ • Batch Scheduling     │ • USB QR/Barcode Guns │ • Firebase Cloud Sync │
+│ • Fee Dues & Vouchers  │ • Face Terminals      │ • Mobile Companion    │
+│ • AI Paper Generator   │ • Pen Drive Importer  │ • Auto-Restore Points │
+└────────────────────────┴───────────────────────┴───────────────────────┘
+      </div>
+
+      <div class="callout callout-info">
+        <div class="callout-title">💡 100% Offline Working Guarantee</div>
+        Internet slow ho ya band ho jaye, tab bhi ClassCore me attendance mark hogi, fees receipt banegi, aur exams report card generate honge. Jab internet wapas connect hoga, tab data automatically Google Cloud par sync ho jayega.
+      </div>
+    </section>
+
+    <!-- CHAPTER 2 -->
+    <section id="ch2" class="chapter">
+      <div class="chapter-badge">Chapter 02</div>
+      <h2 class="chapter-title">First-Time Setup &amp; Onboarding (पहला सेटअप)</h2>
+      
+      <p>Nayi coaching ya tuition center ko setup karne ke aasan steps:</p>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <b>Installation:</b> <code>ClassCore-Setup-3.4.0.exe</code> par double-click karein. Software 10 second me install hokar desktop par icon bana dega.
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <b>Institute Registration:</b> App launch karke apna Name, Institute Name, Mobile Number aur Unique Username select karein.
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <b>Profile Setup (Settings ➔ Profile):</b> Coaching ka Logo upload karein, Address aur Contact details bharein. Yeh details aapki sabhi Fee Receipts aur Report Cards ke top header par print hongi.
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 3 -->
+    <section id="ch3" class="chapter">
+      <div class="chapter-badge">Chapter 03</div>
+      <h2 class="chapter-title">Student &amp; Batch Management (विद्यार्थी और बैच)</h2>
+
+      <h3 class="section-title">3.1 Student Admission</h3>
+      <p>
+        <b>"🎓 Students"</b> section me jakar <b>"+ Add Student"</b> click karein. Yahan student ka Roll Number, Name, Class, Batch aur Parent ka WhatsApp number daalein.
+      </p>
+
+      <div class="callout callout-warning">
+        <div class="callout-title">⚠️ Golden Rule for Roll Numbers</div>
+        Student ka <b>Roll Number</b> numeric hona chahiye (jaise <code>101</code>, <code>102</code>). Yahi Roll Number student ka Biometric Machine User ID banega, jisse attendance 1-click me match ho sake!
+      </div>
+
+      <h3 class="section-title">3.2 Batch Timings &amp; Late Calculations</h3>
+      <p>
+        <b>"🕐 Batches"</b> me batch create karte samay <b>Start Time</b> (jaise <code>08:00 AM</code>) set karein. Jab koi student 15 minute baad card scan karega ya biometric punch karega, to ClassCore automatically uska status <b>"Late" (L)</b> mark kar dega.
+      </p>
+
+      <h3 class="section-title">3.3 Instant PVC Identity Cards</h3>
+      <p>
+        ClassCore har student ke liye barcode aur dynamic QR code wala official ID Card create karta hai. <b>"Print All ID Cards"</b> dabakar PVC Sheet par ek sath print karein.
+      </p>
+    </section>
+
+    <!-- CHAPTER 4 -->
+    <section id="ch4" class="chapter">
+      <div class="chapter-badge">Chapter 04</div>
+      <h2 class="chapter-title">Attendance Ecosystem &amp; Biometric Punch Hub</h2>
+      
+      <p>
+        ClassCore v3.4.0 me <b>Universal Biometric Engine</b> diya gaya hai jo market ki <b>kisi bhi machine</b> aur <b>scanner</b> ke sath seamlessly kaam karta hai.
+      </p>
+
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Supported Brands &amp; Models</th>
+            <th>Kaise Kaam Karta Hai?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Standalone Biometric Machines</b></td>
+            <td>Realtime (T52, RS-10, RS-20), eSSL (MB20, K30, K20), ZKTeco, Mantra, BioMax, SecureEye</td>
+            <td>Pen Drive se <code>attlog.dat</code>, <code>GLog.txt</code> ya Excel report 1-click me ClassCore me import karein.</td>
+          </tr>
+          <tr>
+            <td><b>Live USB Scanners</b></td>
+            <td>TVS, Honeywell, Zebra, Netum, 2D QR Code Guns</td>
+            <td>USB me plug karte hi auto-detect hota hai. Background me student ID card scan karte hi green card pop up hota hai.</td>
+          </tr>
+          <tr>
+            <td><b>WiFi / LAN Machines</b></td>
+            <td>Network Biometric Terminals (Port 4370 / 5005)</td>
+            <td>ClassCore IP Address ping karke machine connection test karta hai.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 class="section-title">4.1 Pen Drive Importer Step-by-Step</h3>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          Machine ke USB port me Pen Drive lagayein aur <code>Menu ➔ USB Manager ➔ Download Attendance Log</code> dabayein.
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          Pen drive computer me lagayein aur ClassCore me <b>"⚡ Biometric &amp; Punch Hub"</b> me <b>"📥 Pen Drive Importer"</b> open karein.
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          File select karein (<code>attlog.dat</code>, <code>GLog.txt</code> ya Excel). ClassCore Roll Number se student match kar lega. <b>"Apply Attendance"</b> dabayein — sabhi bacchon ki attendance 1 second me lag jayegi!
+        </div>
+      </div>
+
+      <h3 class="section-title">4.2 Live USB Background Scanner</h3>
+      <p>
+        Scanner computer me lagate hi ClassCore chime bajata hai: <i>"🔌 USB Scanner Connected!"</i>. Ab aap ClassCore me kisi bhi page par hon, student ka card scan karte hi top-right me <b>Green Profile Flashcard</b> aayega aur Present mark ho jayega. Modal khula rakhne ki zarurat nahi hai!
+      </p>
+      <div class="callout callout-info">
+        <div class="callout-title">⚡ Background Scan Chalu / Band Switch</div>
+        Attendance toolbar par aur popup modal me ek interactive switch diya gaya hai: <code>⚡ Background: CHALU (ON)</code> ya <code>⏸️ Background: BAND (OFF)</code>. Jab aap computer par koi typing ya personal kaam kar rahe hon, to ise 1-click me BAND kar sakte hain taaki scanner ke unwanted inputs attendance me na jayein!
+      </div>
+    </section>
+
+    <!-- CHAPTER 5 -->
+    <section id="ch5" class="chapter">
+      <div class="chapter-badge">Chapter 05</div>
+      <h2 class="chapter-title">Fees &amp; Financial Suite (फीस और आय-व्यय)</h2>
+      
+      <p>
+        Coaching classes me fees tracking sabse sensitive kaam hota hai. ClassCore iska complete record rakhta hai:
+      </p>
+
+      <ul style="padding-left: 20px; font-size: 14px; margin-bottom: 16px; line-height: 1.8;">
+        <li><b>Fee Collection:</b> Student ka Roll Number search karein, amount daalein aur <b>"Collect Fee"</b> dabayein.</li>
+        <li><b>WhatsApp Receipt:</b> Ek click me parent ke WhatsApp par coaching ki official PDF receipt chali jati hai.</li>
+        <li><b>Defaulter Tracking:</b> Filter karein ki kin bacchon ki is mahine ki fees pending hai.</li>
+        <li><b>Expenses &amp; Net Profit:</b> Rent, bijli bill aur teacher salaries ka hisaab feed karein, Dashboard turant Net Profit calculate kar dega.</li>
+      </ul>
+    </section>
+
+    <!-- CHAPTER 6 -->
+    <section id="ch6" class="chapter">
+      <div class="chapter-badge">Chapter 06</div>
+      <h2 class="chapter-title">Exams, Marks &amp; Report Cards (परीक्षा और रिपोर्ट कार्ड)</h2>
+      
+      <p>
+        Weekly tests, monthly exams aur term exams ko manage karna aasan hai:
+      </p>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <b>"📝 Exams"</b> me <b>"+ Create Exam"</b> karein (Class, Subject, Max Marks).
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          Marks sheet me bacchon ke praptank (marks) daalein. System percentage, grade aur class rank automatically nikal leta hai.
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <b>"Generate Report Cards"</b> dabakar coaching logo, performance bar chart aur verification QR code ke sath high-resolution PDF print karein.
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 7 -->
+    <section id="ch7" class="chapter">
+      <div class="chapter-badge">Chapter 07</div>
+      <h2 class="chapter-title">AI Question Paper Generator &amp; Textbooks</h2>
+      
+      <p>
+        ClassCore me Class 1st se 12th tak ki NCERT textbooks ka catalog integrated hai:
+      </p>
+      <ul style="padding-left: 20px; font-size: 14px; margin-bottom: 16px; line-height: 1.8;">
+        <li>Subject aur chapter select karein (e.g. Maths - Chapter 1 &amp; 2).</li>
+        <li>Difficulty level chunein: <b>Easy</b>, <b>Medium</b>, ya <b>Hard</b>.</li>
+        <li>Sections choose karein: MCQs, Short Answers, Long Answers, Case Study.</li>
+        <li><b>"Generate Paper"</b> dabayein: 2 second me student test paper aur teacher ke liye <b>Answer Key Sheet</b> tayyar ho jayegi!</li>
+      </ul>
+    </section>
+
+    <!-- CHAPTER 8 -->
+    <section id="ch8" class="chapter">
+      <div class="chapter-badge">Chapter 08</div>
+      <h2 class="chapter-title">WhatsApp Hub &amp; Automated Alerts (व्हाट्सएप हब)</h2>
+      
+      <p>
+        Parents ke sath communication ke liye browser kholne ki zarurat nahi hai. ClassCore ke andar direct <b>WhatsApp Web Engine</b> hai:
+      </p>
+      <ul style="padding-left: 20px; font-size: 14px; margin-bottom: 16px; line-height: 1.8;">
+        <li><b>One-Time QR Link:</b> WhatsApp Hub me QR scan karein, device permanent link ho jata hai.</li>
+        <li><b>Absent Alerts:</b> Attendance lete hi absent bacchon ke parents ko automatic alert send karein.</li>
+        <li><b>Fee Receipts:</b> Payment hote hi receipt direct parent ke WhatsApp par reach hoti hai.</li>
+        <li><b>AI Auto-Reply Bot:</b> Coaching band hone ke baad bhi agar koi parent admission ya fee inquiry kare, to bot automatically jawab de deta hai.</li>
+      </ul>
+    </section>
+
+    <!-- CHAPTER 9 -->
+    <section id="ch9" class="chapter">
+      <div class="chapter-badge">Chapter 09</div>
+      <h2 class="chapter-title">Academic Rollover &amp; Session Transition</h2>
+      
+      <p>
+        Saal ke ant me jab batch agle standard me jata hai:
+      </p>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <b>Settings ➔ Academic Rollover</b> par jayein.
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          1-click me Class 9 ke bacchon ko Class 10 me promote karein.
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          Pass-out students ko <b>Archive</b> karein — unka purana attendance aur payment record hamesha safe rahega.
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 10 -->
+    <section id="ch10" class="chapter">
+      <div class="chapter-badge">Chapter 10</div>
+      <h2 class="chapter-title">Cloud Sync, Backup &amp; Recovery (डेटा सुरक्षा)</h2>
+      
+      <div class="callout callout-tip">
+        <div class="callout-title">🛡️ Triple Data Safety Architecture</div>
+        <b>1. Local Drive:</b> Sabhi records instant save hote hain.<br>
+        <b>2. Google Cloud Sync:</b> Internet aate hi cloud backup ho jata hai.<br>
+        <b>3. Daily Auto-Snapshot:</b> Har shaam <code>Documents\ClassCore\Backups</code> me encrypted backup file banti hai.
+      </div>
+      <p>
+        Computer badalne ya format karne par naye computer me ClassCore install karein aur <b>"Restore from Backup"</b> dabakar apni <code>.ccbak</code> file select karein. Sabhi students, fees aur marks 5 second me wapas aa jayenge!
+      </p>
+    </section>
+
+    <!-- CHAPTER 11 -->
+    <section id="ch11" class="chapter">
+      <div class="chapter-badge">Chapter 11</div>
+      <h2 class="chapter-title">Troubleshooting &amp; FAQs (समस्या निवारण)</h2>
+      
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>Prashna / Problem</th>
+            <th>Karan</th>
+            <th>Samadhan (Solution)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pen Drive me 0 punches dikh rahe hain?</td>
+            <td>Machine me "New Log" select kiya tha.</td>
+            <td>Machine me jayein: <code>USB Manager ➔ Download All Log</code> (Download ALL chunein).</td>
+          </tr>
+          <tr>
+            <td>Biometric punches me student name match nahi ho raha?</td>
+            <td>Machine User ID aur ClassCore Roll No alag hai.</td>
+            <td>Machine me student ka User ID aur ClassCore me student ka Roll No ek hi hona chahiye.</td>
+          </tr>
+          <tr>
+            <td>USB Scanner plug karne par chime nahi aayi?</td>
+            <td>Scanner Virtual COM mode me hai ya USB port loose hai.</td>
+            <td>Dusre USB port me lagayein aur scanner ke manual me se <b>"USB HID Keyboard"</b> barcode scan karein.</td>
+          </tr>
+          <tr>
+            <td>WhatsApp QR scan karne par connect nahi hota?</td>
+            <td>Internet connection drop hai ya old session stuck hai.</td>
+            <td>WhatsApp Hub me <b>"Reset Session"</b> dabayein aur fresh QR scan karein.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <script>
+    // Live Search Filter for Book
+    function filterBook(q) {
+      const term = q.toLowerCase().trim();
+      const chapters = document.querySelectorAll('.chapter');
+      chapters.forEach(ch => {
+        const text = ch.innerText.toLowerCase();
+        if (!term || text.includes(term)) {
+          ch.style.display = 'block';
+        } else {
+          ch.style.display = 'none';
+        }
+      });
+    }
+
+    // Highlight active sidebar item on scroll
+    window.addEventListener('scroll', () => {
+      const chapters = document.querySelectorAll('.chapter');
+      let current = '';
+      chapters.forEach(ch => {
+        const top = ch.offsetTop - 80;
+        if (window.pageYOffset >= top) {
+          current = ch.getAttribute('id');
+        }
+      });
+      document.querySelectorAll('.sb-nav-item').forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + current) {
+          a.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

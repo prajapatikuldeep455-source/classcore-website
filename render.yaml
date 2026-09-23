@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: classcore-website
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ADMIN_TOKEN
+        generateValue: true
+      - key: DOWNLOAD_URL
+        sync: false
+      - key: DOWNLOAD_SIZE
+        value: 107.9 MB
+      - key: ALLOWED_ORIGIN
+        sync: false
